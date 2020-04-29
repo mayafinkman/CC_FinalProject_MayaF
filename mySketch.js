@@ -1,14 +1,14 @@
 let currentScreen = 1; //counter for keeping track of which screen is on the page
-/* when currentScreen = 1, it is the homepage
-	 when currentScreen = 2, it is the map
-
-*/
+let capture;
 function preload() {
 	myFont = loadFont('TravelGoals.otf');
 	mapImg = loadImage('worldMap.png');
 	LAimg = loadImage('LosAngeles.jpg');
 	NYimg = loadImage('NewYork.jpg');
 	Londonimg = loadImage('London.jpg');
+	Veniceimg = loadImage('Venice.jpg');
+	CapeTownimg= loadImage('CapeTown.jpg');
+	Tokyoimg = loadImage('Tokyo.jpg');
 }
 
 function setup() {
@@ -30,6 +30,15 @@ function draw() {
 	}
 	else if (currentScreen===5){
 		London();
+	}
+	else if (currentScreen===6){
+		Venice();
+	}
+	else if (currentScreen ===7){
+		CapeTown();
+	}
+	else if (currentScreen === 8){
+		Tokyo();
 	}
 
 }
@@ -73,6 +82,21 @@ function London(){
 	image(Londonimg,0,0);
 	BackButton();
 }
+function Venice(){
+	background(255);
+	image(Veniceimg,0,0);
+	BackButton();
+}
+function CapeTown(){
+	background(255);
+	image(CapeTownimg,0,0);
+	BackButton();
+}
+function Tokyo(){
+	background(255);
+	image(Tokyoimg,0,0);
+	BackButton();
+}
 
 function mousePressed() {
 	if (currentScreen === 1) {
@@ -84,8 +108,14 @@ function mousePressed() {
 				currentScreen = 3;}
 		if( (mouseX >= 200 && mouseX<=230)&& (mouseY>=245 && mouseY<=284) ){ //if the mouse presses in the range of the new york pin stamp
 				currentScreen = 4;}
-		if( (mouseX >= 430 && mouseX<=465)&& (mouseY>=198 && mouseY<=235) ){ //if the mouse presses in the range of the new york pin stamp
+		if( (mouseX >= 430 && mouseX<=465)&& (mouseY>=198 && mouseY<=235) ){ //if the mouse presses in the range of the london pin stamp
 				currentScreen = 5;}
+		if( (mouseX >= 475 && mouseX<=505)&& (mouseY>=225 && mouseY<=265) ){ //if the mouse presses in the range of the venice pin stamp
+				currentScreen = 6;}
+		if( (mouseX >= 500 && mouseX<=525)&& (mouseY>=530 && mouseY<=567) ){ //if the mouse presses in the range of the cape town pin stamp
+				currentScreen = 7;}
+		if( (mouseX >= 880 && mouseX<=915)&& (mouseY>=250 && mouseY<=300) ){ //if the mouse presses in the range of the tokyo pin stamp
+				currentScreen = 8;}
 	}
 	if (currentScreen>=3){
 		if(mouseX <=84 && mouseY<=100){ //if the mouse presses in the range of back button, go to map
