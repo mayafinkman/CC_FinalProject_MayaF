@@ -1,5 +1,41 @@
+/* 
+
+Maya Finkman
+Creative Coding Final Project
+	psuedo code:
+	
+	Need: 
+		-images for map, each country
+		- button to go to each location, a back button, button to take picture
+		-camera vision library to insert a photo of yourself
+		- time of day API to change the picture of each location accordingly
+
+	Plan:
+	Scene counter
+		- main map
+		- each location image
+	Buttons
+		-back button
+		-click on each location
+		- take photo button?
+	Each image location
+		- use copyright free images or my images
+		- change depending on the time of day 
+
+*/
 let currentScreen = 1; //counter for keeping track of which screen is on the page
 let capture;
+let timeData;//gets all the data
+let datetime;//gets the current date and time from the depth of the returned array from the api
+let timeArray;//separates the time data from the date 
+let hourArray; //separaes all the time data so that we can get just the hour
+let currentHourString;//the current hour
+let currentHourInt;
+let isNight; //boolean for knowing whether its night or not 
+let locationURLs = ['http://worldtimeapi.org/api/timezone/America/New_York', 'http://worldtimeapi.org/api/timezone/America/Los_Angeles', 'http://worldtimeapi.org/api/timezone/Europe/London', 'http://worldtimeapi.org/api/timezone/Europe/Rome', 'http://worldtimeapi.org/api/timezone/Africa/Johannesburg', 'http://worldtimeapi.org/api/timezone/Asia/Tokyo'];
+let locationTimeArray = [];
+let place;
+
 function preload() {
 	myFont = loadFont('TravelGoals.otf');
 	mapImg = loadImage('worldMap.png');
@@ -9,14 +45,19 @@ function preload() {
 	Veniceimg = loadImage('Venice.jpg');
 	CapeTownimg= loadImage('CapeTown.jpg');
 	Tokyoimg = loadImage('Tokyo.jpg');
+	for (let x=0; x<6;x++){
+		loadJSON(locationURLs[x], gotData);
+	}
 }
 
 function setup() {
 	createCanvas(1000, 750);
 	background(255);
+	
 }
 
 function draw() {
+	print(isNight);
 	if (currentScreen === 1) {
 		homescreen();
 	} else if (currentScreen === 2) {
@@ -24,21 +65,27 @@ function draw() {
 	}
 	else if (currentScreen===3){
 		LosAngeles();
+		checkTime(locationTimeArray[1]);
 	}
 	else if (currentScreen===4){
 		NewYork();
+		checkTime(locationTimeArray[0]);
 	}
 	else if (currentScreen===5){
 		London();
+		checkTime(locationTimeArray[2]);
 	}
 	else if (currentScreen===6){
-		Venice();
+		Venice()
+		checkTime(locationTimeArray[3]);
 	}
 	else if (currentScreen ===7){
 		CapeTown();
+		checkTime(locationTimeArray[4]);
 	}
 	else if (currentScreen === 8){
 		Tokyo();
+		checkTime(locationTimeArray[5]);
 	}
 
 }
@@ -103,7 +150,7 @@ function mousePressed() {
 		currentScreen = 2;
 	}
 	if (currentScreen === 2){
-		print(mouseX,mouseY);
+		//print(mouseX,mouseY);
 		if( (mouseX >= 50 && mouseX<=80)&& (mouseY>=260 && mouseY<=300) ){ //if the mouse presses in the range of the los angeles pin stamp
 				currentScreen = 3;}
 		if( (mouseX >= 200 && mouseX<=230)&& (mouseY>=245 && mouseY<=284) ){ //if the mouse presses in the range of the new york pin stamp
@@ -137,7 +184,28 @@ function BackButton(){
 	text("Map", 57,85);
 }
 
+function gotData(data) {
+  timeData = data;
+	//print(timeData);
+	datetimeString = timeData.datetime;
+	timeArray= split(datetimeString, 'T');
+	hourArray= split(timeArray[1], ':');
+	currentHourString = hourArray[0];
+	currentHourInt = parseInt(currentHourString, 10);
+	locationTimeArray.push(currentHourInt);
+	print(currentHourInt);
+}
 
+function checkTime(time){
+	//print(time);
+	if((time <=6) || (time>=20)){
+		isNight=true;
+	}
+	else{
+		isNight=false;
+	}
+	
+}
 
 
 
