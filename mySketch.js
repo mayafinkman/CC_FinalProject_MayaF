@@ -5,9 +5,9 @@ Creative Coding Final Project
 	psuedo code:
 	
 	Need: 
-		-images for map, each country
-		- button to go to each location, a back button, button to take picture
-		-camera vision library to insert a photo of yourself
+		- images for map, each country
+		! button to go to each location, a back button, button to take picture
+		- camera vision library to insert a photo of yourself
 		- time of day API to change the picture of each location accordingly
 
 	Plan:
@@ -35,6 +35,8 @@ let isNight; //boolean for knowing whether its night or not
 let locationURLs = ['http://worldtimeapi.org/api/timezone/America/New_York', 'http://worldtimeapi.org/api/timezone/America/Los_Angeles', 'http://worldtimeapi.org/api/timezone/Europe/London', 'http://worldtimeapi.org/api/timezone/Europe/Rome', 'http://worldtimeapi.org/api/timezone/Africa/Johannesburg', 'http://worldtimeapi.org/api/timezone/Asia/Tokyo'];
 let locationTimeArray = [];
 let place;
+var planeAnimation;
+var globeAnimation;
 
 function preload() {
 	myFont = loadFont('TravelGoals.otf');
@@ -48,16 +50,20 @@ function preload() {
 	for (let x=0; x<6;x++){
 		loadJSON(locationURLs[x], gotData);
 	}
+	planeAnimation = loadAnimation("plane_1.png", "plane_2.png");
+	globeAnimation = loadAnimation("globe_1.png", "globe_2.png", "globe_3.png", "globe_4.png");
+	
 }
 
 function setup() {
+	frameRate(4);
 	createCanvas(1000, 750);
 	background(255);
 	
 }
 
 function draw() {
-	print(isNight);
+	//print(isNight);
 	if (currentScreen === 1) {
 		homescreen();
 	} else if (currentScreen === 2) {
@@ -107,6 +113,8 @@ function homescreen() { //currentScreen = 1
 	textAlign(CENTER, CENTER);
 	textSize(100);
 	text("Enter", 480, 480);
+	animation(planeAnimation, 800, 480);
+	animation(globeAnimation, 200,500);
 }
 //function to display the main map to chose from
 function worldMap() {
@@ -193,7 +201,7 @@ function gotData(data) {
 	currentHourString = hourArray[0];
 	currentHourInt = parseInt(currentHourString, 10);
 	locationTimeArray.push(currentHourInt);
-	print(currentHourInt);
+	//print(currentHourInt);
 }
 
 function checkTime(time){
