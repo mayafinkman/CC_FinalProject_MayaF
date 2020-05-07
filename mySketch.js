@@ -5,10 +5,11 @@ Creative Coding Final Project
 	psuedo code:
 	
 	Need: 
-		- images for map, each country
-		! button to go to each location, a back button, button to take picture
-		- camera vision library to insert a photo of yourself
-		- time of day API to change the picture of each location accordingly
+		! button to go to each location, a back button
+		! time of day API to change the picture of each location accordingly
+		- add photos for night and day with image cut out
+		- screenshot?
+		- add camera vision library
 
 	Plan:
 	Scene counter
@@ -41,7 +42,7 @@ var globeAnimation;
 function preload() {
 	myFont = loadFont('TravelGoals.otf');
 	mapImg = loadImage('worldMap.png');
-	LAimg = loadImage('LosAngeles.jpg');
+	LAimg = loadImage('LA.png');
 	NYimg = loadImage('NewYork.jpg');
 	Londonimg = loadImage('London.jpg');
 	Veniceimg = loadImage('Venice.jpg');
@@ -59,10 +60,12 @@ function setup() {
 	frameRate(4);
 	createCanvas(1000, 750);
 	background(255);
+	cam = createCapture(VIDEO);
 	
 }
 
 function draw() {
+	cam.hide();
 	//print(isNight);
 	if (currentScreen === 1) {
 		homescreen();
@@ -124,6 +127,7 @@ function worldMap() {
 
 function LosAngeles(){
 	background(255);
+	image(cam, -50, 475, width/2, height/2);
 	image(LAimg,0,0);
 	BackButton();
 }
